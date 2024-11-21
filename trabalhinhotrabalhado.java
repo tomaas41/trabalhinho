@@ -1,62 +1,55 @@
 import java.util.Scanner;
-
 public class trabalhinhotrabalhado {
-    //a)
-
-    //b)
-    public static void kilometros() {
-        int soma = 0;
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                soma += array[j][i];
-            }
-        }
-        for (int i = 0; i < array.length; i++) {
-            System.out.printf("total de km a percorrer\nv%d :    %d km\n", i, soma);
-        }
-    }
-    //c)
-
-    //d)
-    public static void cargaDasBaterias(){
-
-    }
-
+    public static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
-
-        Scanner sc = new Scanner(System.in);
-
         String textDescritivo = sc.nextLine();
         int numVeiculos = sc.nextInt();
         int numDias = sc.nextInt();
-        matrizI(lerInfo(numVeiculos, numDias));
-
+        int[][] matriz = lerInfo(numVeiculos, numDias);
+        kilometros(matriz);
     }
+    //a)
+    public static int[][] lerInfo(int numVeiculos, int numDias) {
+        System.out.println();
+        System.out.printf("a) planeamento (km/dia/veículo)\ndia :");
 
-    public static int [] [] lerInfo(int numVeiculos, int numDias) {
-
-        Scanner sc= new Scanner(System.in);
-
-        int [][] matriz = new int[numVeiculos][numDias];
-
+        int[][] matriz = new int[numVeiculos][numDias];
         for (int i = 0; i < numVeiculos; i++) {
+            System.out.printf("%8d",i);
             for (int j = 0; j < numDias; j++) {
                 int kmPercorridos = sc.nextInt();
                 matriz[i][j] = kmPercorridos;
             }
-
         }
-       return matriz;
+        System.out.printf("----|");
+        for (int i = 0; i < matriz.length; i++) {
+            System.out.printf("--------|");
+        }
+        System.out.println();
+        for (int i = 0; i < matriz.length; i++) {
+            System.out.printf("v%-4d:",i);
+            for (int j = 0; j < matriz[i].length; j++) {
+                System.out.printf("%8d",matriz[i][j]);
+            }
+            System.out.println();
+        }
+        return matriz;
     }
-    public static void matrizI(int [][] matriz) {
-       for (int i = 0; i < matriz.length; i++) {
-           for (int j = 0; j < matriz[i].length; j++) {
-               System.out.print(matriz[i][j] + " ");
-           }
-           System.out.println();
-       }
-
+    //b)
+    public static void kilometros(int[][] array) {
+        System.out.printf("b) total de km a percorrer\n");
+        int soma[] = new int[array.length];
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                soma[i] += array[i][j];
+            }
+        }
+        for (int i = 0; i < array.length; i++) {
+            System.out.printf("v%-3d:%8d km\n",i,soma[i]);
+        }
     }
-
-
 }
+    //c)
+
+    //d)
+

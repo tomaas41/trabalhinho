@@ -178,7 +178,7 @@ public class trabalhinhotrabalhado {
 
             for (int j = 0; j < matriz.length; j++) {
 
-                soma += matriz[i][j];
+                soma += matriz[j][i];
             }
 
             double media = (double) soma / matriz.length;

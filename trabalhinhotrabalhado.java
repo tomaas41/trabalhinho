@@ -9,10 +9,11 @@ public class trabalhinhotrabalhado {
         int numVeiculos = sc.nextInt();
         int numDias = sc.nextInt();
         int[][] matriz = matrizConstrutora(numVeiculos, numDias);
+        int[][] matrizC = carregamentos(matriz);
         info(matriz);
         kilometros(matriz);
-        carregamentos(matriz);
         media(matriz);
+        veiculosRecarregados(matrizC);
     }
 
     public static int[][] matrizConstrutora(int numVeiculos, int numDias) {
@@ -76,7 +77,7 @@ public class trabalhinhotrabalhado {
     }
 
     //c)
-    public static void carregamentos(int[][] matrizConstrutora) {
+    public static int[][] carregamentos(int[][] matrizConstrutora) {
 
         System.out.println("c) recargas das baterias");
         int[][] matrizC = new int[matrizConstrutora.length][matrizConstrutora[0].length];
@@ -106,8 +107,10 @@ public class trabalhinhotrabalhado {
             }
         }
         printMattriz(matrizC);
+        return matrizC;
     }
 
+    //d
     public static void baterias(int[][] array, int numDias, int numVeiculos, int matriz[][]) {
         System.out.printf("d) carga das baterias\ndia :");
         double[][] carga = new double[array.length][array[0].length];
@@ -160,17 +163,13 @@ public class trabalhinhotrabalhado {
                             }
                             System.out.println();
                         }
-
                     }
-
-
                 }
-
-
             }
         }
     }
 
+    //e
     public static void media(int[][] matriz) {
         double[][] matrizD = new double[1][matriz[0].length];
 
@@ -179,7 +178,7 @@ public class trabalhinhotrabalhado {
 
             for (int j = 0; j < matriz.length; j++) {
 
-                soma = soma + matriz[i][j];
+                soma += matriz[i][j];
             }
 
             double media = (double) soma / matriz.length;
@@ -209,9 +208,26 @@ public class trabalhinhotrabalhado {
     }
 
     //g)
-    public static void veiculosRecarregados(int[][] matrizConstrutora) {
+    public static void veiculosRecarregados(int[][] matrizC) {
 
-        
+        int recargasConsecutivas = 0;
+        int veiculosMaisRecarregado = 0;
+
+        for (int i = 0; i < matrizC.length; i++) {
+            recargasConsecutivas = 0;
+            for (int j = 0; j < matrizC[0].length; j++) {
+                if (matrizC[i][j] != 0) {
+                    recargasConsecutivas++;
+                }
+            }
+            if (recargasConsecutivas > veiculosMaisRecarregado) {
+                veiculosMaisRecarregado = recargasConsecutivas;
+                System.out.printf("veículos com mais dias consecutivas a necessitar de recarga\n" +
+                        "<%d> dias consecutivos, veículos : [V%d]", veiculosMaisRecarregado, i);
+            }
+
+        }
+
     }
 }
 

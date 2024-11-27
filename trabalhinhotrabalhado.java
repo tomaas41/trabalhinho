@@ -15,6 +15,7 @@ public class trabalhinhotrabalhado {
         baterias(matriz);
         acimaDaMédia(matriz,media(matriz));
         veiculosRecarregados(matrizC);
+        diaMaisTardio(matrizC);
     }
 
     public static int[][] matrizConstrutora(int numVeiculos, int numDias) {
@@ -222,6 +223,21 @@ public class trabalhinhotrabalhado {
             }
 
         }
+
+    }
+    //h)
+    public static void diaMaisTardio(int[][] recargas) {
+        int diaMaisTardio = -1;
+        for (int j = 0; j < recargas[0].length; j++) {
+            int contagem = 0;
+            for (int i = 0; i < recargas.length; i++) {
+                if(recargas[i][j]>0)
+                    contagem++;
+            }
+            if(contagem==recargas[0].length)
+                diaMaisTardio = j;
+        }
+        System.out.println(diaMaisTardio);
 
     }
 }

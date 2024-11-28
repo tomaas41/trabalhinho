@@ -205,10 +205,9 @@ public class trabalhinhotrabalhado {
     }
     //g)
     public static void veiculosRecarregados(int[][] matrizC) {
-
+        System.out.printf("\ng) veículos com mais dias consecutivas a necessitar de recarga");
         int recargasConsecutivas = 0;
         int veiculosMaisRecarregado = 0;
-
         for (int i = 0; i < matrizC.length; i++) {
             recargasConsecutivas = 0;
             for (int j = 0; j < matrizC[0].length; j++) {
@@ -218,15 +217,25 @@ public class trabalhinhotrabalhado {
             }
             if (recargasConsecutivas > veiculosMaisRecarregado) {
                 veiculosMaisRecarregado = recargasConsecutivas;
-                System.out.printf("\ng) veículos com mais dias consecutivas a necessitar de recarga\n" +
-                        "<%d> dias consecutivos, veículos : [V%d]", veiculosMaisRecarregado, i);
             }
-
         }
-
+        System.out.printf("\n<%d> dias consecutivos, veículos : ", veiculosMaisRecarregado);
+        for (int i = 0; i < matrizC.length; i++) {
+            int contagem = 0;
+            for (int j = 0; j < matrizC[0].length; j++) {
+               if (matrizC[i][j] > 0) {
+                   contagem++;
+               }
+            }
+            if(contagem==veiculosMaisRecarregado){
+                System.out.printf("[V%d]", i);
+            }
+        }
+        System.out.println();
     }
     //h)
     public static void diaMaisTardio(int[][] recargas) {
+        System.out.printf("\nh) dia mais tardio em que todos os veículos necessitam de recarregar");
         int diaMaisTardio = -1;
         for (int j = 0; j < recargas[0].length; j++) {
             int contagem = 0;
@@ -237,8 +246,7 @@ public class trabalhinhotrabalhado {
             if(contagem==recargas[0].length)
                 diaMaisTardio = j;
         }
-        System.out.println(diaMaisTardio);
-
+        System.out.printf(" <%d>\n", diaMaisTardio);
     }
 }
 

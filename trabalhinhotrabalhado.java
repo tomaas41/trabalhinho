@@ -12,10 +12,11 @@ public class trabalhinhotrabalhado {
         info(matriz);
         kilometros(matriz);
         int[][] matrizC = carregamentos(matriz);
-        baterias(matriz);
-        acimaDaMédia(matriz,media(matriz));
+        double[][] baterias = baterias(matriz);
+        acimaDaMédia(matriz, media(matriz));
         veiculosRecarregados(matrizC);
         diaMaisTardio(matrizC);
+        veiculoPrevenção(matriz, baterias);
     }
 
     public static int[][] matrizConstrutora(int numVeiculos, int numDias) {
@@ -113,7 +114,7 @@ public class trabalhinhotrabalhado {
     }
 
     //d)
-    public static void baterias(int[][] array) {
+    public static double[][] baterias(int[][] array) {
         System.out.printf("\nd) carga das baterias\ndia :");
         double[][] carga = new double[array.length][array[0].length];
         for (int i = 0; i < array.length; i++) {
@@ -131,7 +132,7 @@ public class trabalhinhotrabalhado {
         for (int i = 0; i < array.length; i++) {
             for (int j = 1; j < array[i].length; j++) {
                 carga[i][j] = carga[i][j - 1] - array[i][j];
-                while(carga[i][j] <= 0){
+                while (carga[i][j] <= 0) {
                     carga[i][j] += 100;
                 }
             }
@@ -139,29 +140,25 @@ public class trabalhinhotrabalhado {
         for (int i = 0; i < array.length; i++) {
             System.out.printf("\nv%-3d:", i);
             for (int j = 0; j < array[i].length; j++) {
-                System.out.printf("%7.1f%% ",carga[i][j]);
+                System.out.printf("%7.1f%% ", carga[i][j]);
             }
         }
         System.out.println();
+        return carga;
     }
 
     //e)
     public static double[] media(int[][] matriz) {
         System.out.printf("\ne) média de km diários da frota");
         double[] matrizD = new double[matriz[0].length];
-
         for (int i = 0; i < matriz[0].length; i++) {
             int soma = 0;
-
             for (int j = 0; j < matriz.length; j++) {
-
                 soma += matriz[j][i];
             }
-
             double media = (double) soma / matriz.length;
             matrizD[i] = media;
         }
-
         System.out.printf("\ndia: ");
         for (int j = 0; j < matriz[0].length; j++) {
             System.out.printf("%8d ", j);
@@ -184,25 +181,27 @@ public class trabalhinhotrabalhado {
         return matrizD;
 
     }
+
     //f)
-    public static void acimaDaMédia(int[][] matriz,double[] matrizD) {
-        int veiculosAcima=0;
+    public static void acimaDaMédia(int[][] matriz, double[] matrizD) {
+        int veiculosAcima = 0;
         int[] contagem = new int[matriz.length];
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[i].length; j++) {
-                if (matriz[i][j]>matrizD[i])
+                if (matriz[i][j] > matrizD[i])
                     contagem[i]++;
             }
-            if(contagem[i]==matriz[0].length)
+            if (contagem[i] == matriz[0].length)
                 veiculosAcima++;
         }
         System.out.printf("\nf) deslocações sempre acima da média diária\n<%d> veículos : ", veiculosAcima);
         for (int i = 0; i < contagem.length; i++) {
-            if (contagem[i]==matriz[0].length)
+            if (contagem[i] == matriz[0].length)
                 System.out.printf("[v%d]", i);
         }
         System.out.println();
     }
+
     //g)
     public static void veiculosRecarregados(int[][] matrizC) {
         System.out.printf("\ng) veículos com mais dias consecutivas a necessitar de recarga");
@@ -223,16 +222,17 @@ public class trabalhinhotrabalhado {
         for (int i = 0; i < matrizC.length; i++) {
             int contagem = 0;
             for (int j = 0; j < matrizC[0].length; j++) {
-               if (matrizC[i][j] > 0) {
-                   contagem++;
-               }
+                if (matrizC[i][j] > 0) {
+                    contagem++;
+                }
             }
-            if(contagem==veiculosMaisRecarregado){
+            if (contagem == veiculosMaisRecarregado) {
                 System.out.printf("[V%d]", i);
             }
         }
         System.out.println();
     }
+
     //h)
     public static void diaMaisTardio(int[][] recargas) {
         System.out.printf("\nh) dia mais tardio em que todos os veículos necessitam de recarregar");
@@ -240,13 +240,36 @@ public class trabalhinhotrabalhado {
         for (int j = 0; j < recargas[0].length; j++) {
             int contagem = 0;
             for (int i = 0; i < recargas.length; i++) {
-                if(recargas[i][j]>0)
+                if (recargas[i][j] > 0)
                     contagem++;
             }
-            if(contagem==recargas[0].length)
+            if (contagem == recargas[0].length)
                 diaMaisTardio = j;
         }
         System.out.printf(" <%d>\n", diaMaisTardio);
+    }
+
+    //j)
+    public static void veiculoPrevenção(int[][] kilometros, double[][] baterias) {
+        int minimoKilometros = 10000;
+        double maximoBaterias = 0;
+        int veiculo = 0;
+        int dia = -1;
+        while (dia < 0 || dia >= kilometros[0].length) {
+            dia = sc.nextInt();
+        }
+        for (int i = 0; i < kilometros.length; i++) {
+            if (kilometros[i][dia] < minimoKilometros) {
+                minimoKilometros = kilometros[i][dia];
+                veiculo = i;
+                maximoBaterias=baterias[i][dia];
+            }
+            if (maximoBaterias < baterias[i][dia] && kilometros[i][dia] == minimoKilometros) {
+                maximoBaterias = baterias[i][dia];
+                veiculo = i;
+            }
+        }
+        System.out.printf("\nj) veículo de prevenção no dia <%d> : V%d\n", dia, veiculo);
     }
 }
 
